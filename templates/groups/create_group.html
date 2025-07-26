@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Create New Group</h2>
+<div class="d-flex justify-content-center align-items-center" style="min-height:70vh;">
+    <form method="POST" class="card p-4 shadow w-100" style="max-width:500px;">
+        <div class="mb-3">
+            <label for="name" class="form-label">Group Name</label>
+            <input type="text" name="name" class="form-control" required autofocus>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="description" class="form-control"></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Create Group</button>
+    </form>
+</div>
+{% endblock %}

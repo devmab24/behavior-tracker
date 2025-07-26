@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Your Goals</h2>
+<a href="{{ url_for('goals.add_goal') }}" class="btn btn-primary mb-3">Add New Goal</a>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Behavior</th>
+            <th>Target Count</th>
+            <th>Period</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for goal in goals %}
+        <tr>
+            <td>{{ goal.behavior.name }}</td>
+            <td>{{ goal.target_count }}</td>
+            <td>{{ goal.period }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="3" class="text-center text-muted">No goals yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

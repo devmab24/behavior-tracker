@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Your Reminders</h2>
+<a href="{{ url_for('reminders.add_reminder') }}" class="btn btn-primary mb-3">Add New Reminder</a>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Behavior</th>
+            <th>Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for reminder in reminders %}
+        <tr>
+            <td>{{ reminder.behavior.name }}</td>
+            <td>{{ reminder.time }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="2" class="text-center text-muted">No reminders yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

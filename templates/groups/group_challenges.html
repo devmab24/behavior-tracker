@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Group Challenges</h2>
+<a href="{{ url_for('group_challenges.add_challenge', group_id=group_id) }}" class="btn btn-primary mb-3">Add Challenge</a>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Challenge</th>
+            <th>Target Count</th>
+            <th>Period</th>
+            <th>Active</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for challenge in challenges %}
+        <tr>
+            <td>{{ challenge.challenge_text }}</td>
+            <td>{{ challenge.target_count }}</td>
+            <td>{{ challenge.period }}</td>
+            <td>
+                {% if challenge.active %}<span class="badge bg-success">Active</span>{% else %}<span class="badge bg-danger">Inactive</span>{% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4" class="text-center text-muted">No challenges yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ url_for('groups.list_groups') }}" class="btn btn-secondary">Back to Groups</a>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Add Group Challenge</h2>
+<form method="POST" class="card p-4 shadow w-100" style="max-width:500px;">
+    <div class="mb-3">
+        <label for="challenge_text" class="form-label">Challenge Description</label>
+        <input type="text" name="challenge_text" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="target_count" class="form-label">Target Count</label>
+        <input type="number" name="target_count" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="period" class="form-label">Period</label>
+        <select name="period" class="form-select">
+            <option value="Daily">Daily</option>
+            <option value="Weekly">Weekly</option>
+            <option value="Monthly">Monthly</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Add Challenge</button>
+</form>
+<a href="{{ url_for('group_challenges.list_challenges', group_id=group_id) }}" class="btn btn-secondary mt-3">Back to Challenges</a>
+{% endblock %}
