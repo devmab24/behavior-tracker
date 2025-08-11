@@ -23,6 +23,8 @@ class LogEntry(db.Model):
     note = db.Column(db.String(255))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     mood = db.Column(db.String(20))
+    behavior = db.relationship('Behavior', backref='logs')
+
 
 class Goal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -30,12 +32,16 @@ class Goal(db.Model):
     target_count = db.Column(db.Integer, nullable=False)
     period = db.Column(db.String(20), default='week')
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    behavior = db.relationship('Behavior', backref='goals')
+
 
 class Reminder(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     behavior_id = db.Column(db.Integer, db.ForeignKey('behavior.id'), nullable=False)
     time = db.Column(db.String(10))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    behavior = db.relationship('Behavior', backref='reminders')
+
 
 class Group(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -66,3 +72,4 @@ class GroupMessage(db.Model):
     sender_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     message = db.Column(db.String(255))
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    sender = db.relationship('User', backref='sent_messages')
