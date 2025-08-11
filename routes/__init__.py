@@ -7,6 +7,7 @@ from .groups import groups_bp
 from .group_messages import group_messages_bp
 from .group_challenges import group_challenges_bp
 from .home import home_bp
+from .api import api_bp
 
 
 def register_blueprints(app):

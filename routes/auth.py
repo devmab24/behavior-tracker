@@ -31,3 +31,28 @@ def register():
         flash('Registration successful. Please log in.')
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html')
+
+from flask import current_app, send_from_directory, url_for
+import os
+from werkzeug.utils import secure_filename
+
+@auth_bp.route('/profile', methods=['GET', 'POST'])
+@login_required
+def profile():
+    if request.method == 'POST':
+        display_name = request.form.get('display_name')
+        avatar = request.files.get('avatar')
+        if display_name:
+            current_user.username = display_name
+        if avatar and avatar.filename:
+            filename = secure_filename(avatar.filename)
+            uploads = os.path.join(current_app.root_path, 'static', 'uploads')
+            os.makedirs(uploads, exist_ok=True)
+            path = os.path.join(uploads, filename)
+            avatar.save(path)
+            # You might want to persist avatar path in DB; for now attach to object
+            current_user.avatar = url_for('static', filename='uploads/' + filename)
+        db.session.commit()
+        flash('Profile updated')
+        return redirect(url_for('auth.profile'))
+    return render_template('auth/profile.html')

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Dashboard</h2>
+    <div>
+      <a href="{{ url_for('behaviors.list_behaviors') }}" class="btn btn-outline-primary btn-sm">Behaviors</a>
+      <a href="{{ url_for('auth.profile') }}" class="btn btn-outline-secondary btn-sm">Profile</a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card p-3">
+        <h5>Recent activity</h5>
+        <ul id="recentLogs" class="list-group list-group-flush"></ul>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card p-3">
+        <h5>Progress</h5>
+        <canvas id="goalsChart" height="220"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+async function loadDashboard(){
+  const logsRes = await fetch('/api/logs');
+  if(!logsRes.ok){ return; }
+  const logs = await logsRes.json();
+  const ul = document.getElementById('recentLogs');
+  ul.innerHTML = '';
+  logs.slice(0,10).forEach(l=>{
+    const li = document.createElement('li');
+    li.className = 'list-group-item';
+    li.textContent = `${new Date(l.timestamp).toLocaleString()} — ${l.note || 'Logged'} (value:${l.value})`;
+    ul.appendChild(li);
+  });
+
+  const goalsRes = await fetch('/api/goals');
+  if(goalsRes.ok){
+    const goals = await goalsRes.json();
+    const labels = goals.map(g=>g.title);
+    const data = goals.map(g=>g.progress || 0);
+    new Chart(document.getElementById('goalsChart'), {
+      type: 'bar',
+      data: { labels, datasets: [{ label: 'Progress', data }] },
+      options: { responsive: true, maintainAspectRatio: false }
+    });
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadDashboard);
+</script>
+{% endblock %}
