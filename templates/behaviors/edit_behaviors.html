@@ -14,18 +14,3 @@
     <button type="submit" class="btn btn-success">{{ behavior and "Update" or "Add" }}</button>
 </form>
 {% endblock %}
-<!-- {% extends "base.html" %}
-{% block content %}
-<h2>{{ behavior and "Edit Behavior" or "Add Behavior" }}</h2>
-<form method="POST" class="card p-4 shadow w-100" style="max-width:500px;">
-    <div class="mb-3">
-        <label for="name" class="form-label">Behavior Name</label>
-        <input type="text" name="name" class="form-control" value="{{ behavior.name if behavior else '' }}" required>
-    </div>
-    <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea name="description" class="form-control" required>{{ behavior.description if behavior else '' }}</textarea>
-    </div>
-    <button type="submit" class="btn btn-success">{{ behavior and "Update" or "Add" }}</button>
-</form>
-{% endblock %} -->
